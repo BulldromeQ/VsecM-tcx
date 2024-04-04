@@ -18,12 +18,12 @@ COPY go.mod /build/go.mod
 WORKDIR /build
 RUN CGO_ENABLED=0 GOOS=linux go build -mod vendor -a -o safe \
     ./app/sentinel/cmd/main.go ./app/sentinel/cmd/help.go ./app/sentinel/cmd/parse.go
-RUN CGO_ENABLED=0 GOOS=linux go build -mod vendor -a -o sloth ./app/sentinel/busywait/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -mod vendor -a -o sloth ./app/sentinel/background/main.go
 
 # generate clean, final image for end users
 FROM gcr.io/distroless/static-debian11
 
-ENV APP_VERSION="0.24.4"
+ENV APP_VERSION="0.24.5"
 
 LABEL "maintainers"="VSecM Maintainers <maintainers@vsecm.com>"
 LABEL "version"=$APP_VERSION

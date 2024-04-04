@@ -20,12 +20,12 @@ WORKDIR /build
 # GOEXPERIMENT=boringcrypto is required for FIPS compliance.
 RUN CGO_ENABLED=0 GOEXPERIMENT=boringcrypto GOOS=linux go build -mod vendor -a -o safe \
     ./app/sentinel/cmd/main.go ./app/sentinel/cmd/help.go ./app/sentinel/cmd/parse.go
-RUN CGO_ENABLED=0 GOEXPERIMENT=boringcrypto GOOS=linux go build -mod vendor -a -o sloth ./app/sentinel/busywait/main.go
+RUN CGO_ENABLED=0 GOEXPERIMENT=boringcrypto GOOS=linux go build -mod vendor -a -o sloth ./app/sentinel/background/main.go
 
 # generate clean, final image for end users
 FROM photon:5.0
 
-ENV APP_VERSION="0.24.4"
+ENV APP_VERSION="0.24.5"
 
 LABEL "maintainers"="VSecM Maintainers <maintainers@vsecm.com>"
 LABEL "version"=$APP_VERSION
