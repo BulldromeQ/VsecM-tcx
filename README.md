@@ -98,7 +98,8 @@ ensuring our software stays dependable and effective for production use.
 
 ## 🦆🦆🦆 (*Docs*)
 
-[Official documentation on **vsecm.com**](https://vsecm.com/).
+* [Official documentation on **vsecm.com**](https://vsecm.com/).
+* [Go Docs on **pkg.go.dev**](https://pkg.go.dev/github.com/vmware-tanzu/secrets-manager)
 
 ## A Note on Security
 
@@ -184,6 +185,7 @@ Here are the important folders and files in this repository:
     * `./app/init_container`: Contains the source code for the **VSecM Init Container**.
     * `./app/inspector`: Contains the source code for the **VSecM Inspector**.
     * `./app/keygen`: Contains the source code for the **VSecM Keygen**.
+    * `./app/keystone`: Contains the **VSecM KeyStone** source code.
     * `./app/safe`: Contains the **VSecM Safe** source code.
     * `./app/sentinel`: Contains the source code for the **VSecM Sentinel**.
     * `./app/sidecar`: Contains the source code for the **VSecM Sidecar**.
@@ -208,6 +210,22 @@ Here are the important folders and files in this repository:
 * `./LICENSE`: Contains **VSecM** License.
 * `./Makefile`: The `Makefile` used for building,
   publishing, deploying, and testing the project.
+
+## Branches
+
+There are special long-living branches that the project maintains.
+
+* `main`: This is the source code that is in active development. We try out best
+  to keep it stable; however, there is no guarantees. We tag stable releases
+  off of this branch during every release cut.
+* `gh-pages`: This branch is where VSecM Helm charts are maintained.
+  [ArtifactHub][artifacthub] references this branch.
+* `docs`: This branch contains versioned documentation snapshots that we take  
+   during releases.
+* `tcx`: This is an internal "experimental" branch that is not meant for
+  public consumption.
+
+[artifacthub]: https://artifacthub.io/packages/helm/vsecm/vsecm
 
 ## Changelog
 

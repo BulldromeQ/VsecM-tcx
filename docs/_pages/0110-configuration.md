@@ -39,6 +39,8 @@ The following section contain a breakdown of all of these environment variables.
 
 [helm-charts]: https://vmware-tanzu.github.io/secrets-manager/
 
+// TODO: some of the env vars are missing; add them.
+
 ### SPIFFE_ENDPOINT_SOCKET
 
 **Used By**: *VSecM Sentinel*, *VSecM Sidecar*,
@@ -242,7 +244,7 @@ mode. Setting it to `"true"` will make **VSecM Safe** run in FIPS-compliant mode
 
 > **You Need Host Support for FIPS-Compliant Mode**
 > 
-> Note that this is not a guarantee that VSecM Safe will actually
+> Note that this is not a guarantee that **VSecM Safe** will actually
 > run in FIPS compliant mode, as it depends on the underlying base image.
 > 
 > In addition, the host environment will need to be compliant too.
@@ -262,13 +264,11 @@ mode. Setting it to `"true"` will make **VSecM Safe** run in FIPS-compliant mode
 If you are using one of the official FIPS-complaint VSecM Docker images,
 then it will be FIPS-compliant.
 
-As a FIPS-compliant base image you can choose from the following:
+As a FIPS-compliant base image you can use the following:
 
 * [vsecm/vsecm-ist-fips-safe][vsecm-safe-istanbul-fips] (*using a Distroless base*)
-* [vsecm/vsecm-photon-fips-safe][vsecm-safe-photon-fips] (*using VMware Photon OS as a base*)
 
 [vsecm-safe-istanbul-fips]: https://hub.docker.com/repository/docker/vsecm/vsecm-ist-fips-safe/general
-[vsecm-safe-photon-fips]: https://hub.docker.com/repository/docker/vsecm/vsecm-photon-fips-safe/general
 
 ### VSECM_SAFE_IV_INITIALIZATION_INTERVAL
 
@@ -447,27 +447,6 @@ This file is used to automate the initialization of **VSecM Sentinel** entries
 during the first deployment of **VSecM**.
 
 If not given, defaults to `"/opt/vsecm-sentinel/init/data"`.
-
-### VSECM_SENTINEL_INIT_COMMAND_TOMBSTONE_PATH
-
-**Used By**: *VSecM Sentinel*.
-
-`VSECM_SENTINEL_INIT_COMMAND_TOMBSTONE_PATH` returns the path for the
-**VSecM Sentinel** initialization command tombstone file.
-
-Defaults to `"/opt/vsecm-sentinel/tombstone/init"`.
-
-This path is usually used to store a "*tombstone*" file or data indicating that
-the initialization command has been executed or is no longer valid.
-
-### VSECM_SENTINEL_INIT_COMMAND_RUNNER_WAIT_TIMEOUT
-
-`VSECM_SENTINEL_INIT_COMMAND_RUNNER_WAIT_TIMEOUT` it the timeout duration for
-**VSecM Sentinel** to wait for **VSecM Safe** to be operational before 
-executing the initialization commands.
-
-If the environment variable is not set or invalid, a default timeout of
-`300000` milliseconds (5 minutes) is used.
 
 ### VSECM_SENTINEL_LOGGER_URL
 

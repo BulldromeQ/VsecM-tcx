@@ -38,7 +38,7 @@ deploy-spire:
 		kubectl apply -f ${MANIFESTS_BASE_PATH}/crds; \
 		kubectl apply -f ${MANIFESTS_BASE_PATH}/spire.yaml; \
 		echo "verifying SPIRE installation"; \
-		kubectl wait --for=condition=Available deployment -n spire-system spire-server; \
+		kubectl wait --for=condition=ready pod spire-server-0 --timeout=60s -n spire-system \
 		echo "spire-server: deployment available"; \
 		echo "spire installation successful"; \
 	fi
@@ -50,23 +50,11 @@ deploy: deploy-spire
 deploy-fips: deploy-spire
 	kubectl apply -f ${MANIFESTS_REMOTE_PATH}/vsecm-distroless-fips.yaml
 	$(MAKE) post-deploy
-deploy-photon: deploy-spire
-	kubectl apply -f ${MANIFESTS_REMOTE_PATH}/vsecm-photon.yaml
-	$(MAKE) post-deploy
-deploy-photon-fips: deploy-spire
-	kubectl apply -f ${MANIFESTS_REMOTE_PATH}/vsecm-photon-fips.yaml
-	$(MAKE) post-deploy
 deploy-local: deploy-spire
 	kubectl apply -f ${MANIFESTS_LOCAL_PATH}/vsecm-distroless.yaml
 	$(MAKE) post-deploy
 deploy-fips-local: deploy-spire
 	kubectl apply -f ${MANIFESTS_LOCAL_PATH}/vsecm-distroless-fips.yaml
-	$(MAKE) post-deploy
-deploy-photon-local: deploy-spire
-	kubectl apply -f ${MANIFESTS_LOCAL_PATH}/vsecm-photon.yaml
-	$(MAKE) post-deploy
-deploy-photon-fips-local: deploy-spire
-	kubectl apply -f ${MANIFESTS_LOCAL_PATH}/vsecm-photon-fips.yaml
 	$(MAKE) post-deploy
 deploy-eks: deploy-spire
 	kubectl apply -f ${MANIFESTS_EKS_PATH}/vsecm-distroless.yaml
@@ -74,20 +62,14 @@ deploy-eks: deploy-spire
 deploy-fips-eks: deploy-spire
 	kubectl apply -f ${MANIFESTS_EKS_PATH}/vsecm-distroless-fips.yaml
 	$(MAKE) post-deploy
-deploy-photon-eks: deploy-spire
-	kubectl apply -f ${MANIFESTS_EKS_PATH}/vsecm-photon.yaml
-	$(MAKE) post-deploy
-deploy-photon-fips-eks: deploy-spire
-	kubectl apply -f ${MANIFESTS_EKS_PATH}/vsecm-photon-fips.yaml
-	$(MAKE) post-deploy
 
 .SILENT:
 .PHONY: post-deploy
 post-deploy:
 	echo "verifying vsecm installation"
-	kubectl wait --for=condition=Available deployment -n vsecm-system vsecm-sentinel
+	kubectl wait --timeout=60s --for=condition=Available deployment -n vsecm-system vsecm-sentinel
 	echo "vsecm-sentinel: deployment available"
-	kubectl wait --for=condition=Available deployment -n vsecm-system vsecm-safe
+	kubectl wait --for=condition=ready pod vsecm-safe-0 --timeout=60s -n vsecm-system
 	echo "vsecm-safe: deployment available"
 	echo "vsecm installation successful"
 

@@ -30,13 +30,6 @@ next_url: /docs/security/
 As the lead architect, Volkan is responsible for overall code quality,
 security, architecture decisions, and major feature developments.
 
-## Security
-
-**Ramiro Salas** [@RamXX](https://github.com/RamXX)
-
-Ramiro is in charge of maintaining and enhancing the security aspects of the
-project.
-
 ## Core Contributors
 
 **Abhishek Sharma** [@abhishek44sharma](https://github.com/abhishek44sharma)
@@ -57,6 +50,13 @@ automation.
 
 Farhan is a core contributor, actively contributing to the codebase and
 assisting in feature development.
+
+**Qi Hu** (*Patrick*) [@BulldromeQ](https://github.com/BulldromeQ)
+
+Patrick has played a crucial role in integrating VSecM to work seamlessly with 
+the [Carvel](https://carvel.dev) suite of tools. He has helped enhance the 
+stability and reliability of both the VSecM and SPIRE. And he is actively 
+involved in making VSecM even more robust.
 
 [codeowners]: https://github.com/vmware-tanzu/secrets-manager/blob/main/CODEOWNERS "VMware Secrets Manager CODEOWNERS"
 

@@ -11,12 +11,19 @@
 package main
 
 import (
+	"fmt"
+	"log"
+	"os"
+
 	"github.com/vmware-tanzu/secrets-manager/core/system"
 )
 
 func main() {
-	// TODO: add some logs here!
-	
+	log.Println(
+		"VSecM Keystone",
+		fmt.Sprintf("v%s", os.Getenv("APP_VERSION")),
+	)
+
 	// Run on the main thread to wait forever.
 	system.KeepAlive()
 }

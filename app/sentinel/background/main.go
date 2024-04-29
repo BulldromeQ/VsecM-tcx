@@ -34,20 +34,23 @@ func main() {
 
 	log.InfoLn(&id, "Executing the initialization commands (if any)")
 
+	ctx := context.WithValue(context.Background(), "correlationId", &id)
+
+	log.TraceLn(&id, "before RunInitCommands")
+
 	// Execute the initialization commands (if any)
 	// This overloads the functionality of this process.
 	// If we end up adding more functionality to this process,
 	// we should refactor this and create a new process for the
 	// new functionality.
-	initialization.RunInitCommands(
-		context.WithValue(context.Background(), "correlationId", &id),
-	)
+	initialization.RunInitCommands(ctx)
 
 	log.InfoLn(&id, "Initialization commands executed successfully")
 
 	if env.SentinelEnableOIDCResourceServer() {
 		go rest.RunRestServer()
 	}
+
 	// Run on the main thread to wait forever.
 	system.KeepAlive()
 }

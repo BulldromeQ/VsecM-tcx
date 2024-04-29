@@ -26,26 +26,24 @@ type VSecMInternalCommand struct {
 }
 
 type SentinelCommand struct {
-	WorkloadIds     []string
-	Namespaces      []string
-	Secret          string
-	Template        string
-	DeleteSecret    bool
-	AppendSecret    bool
-	BackingStore    string
-	Format          string
-	Encrypt         bool
-	NotBefore       string
-	Expires         string
-	InputKeys       string
-	ShouldSleep     bool
-	SleepIntervalMs int
+	WorkloadIds        []string
+	Namespaces         []string
+	Secret             string
+	Template           string
+	DeleteSecret       bool
+	AppendSecret       bool
+	BackingStore       string
+	Format             string
+	Encrypt            bool
+	NotBefore          string
+	Expires            string
+	SerializedRootKeys string
+	ShouldSleep        bool
+	SleepIntervalMs    int
 }
 
 type (
-	JsonTime     time.Time
-	BackingStore string
-	SecretFormat string
+	JsonTime time.Time
 )
 
 func (t *JsonTime) MarshalJSON() ([]byte, error) {
@@ -72,12 +70,20 @@ func (t *JsonTime) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type (
+	BackingStore       string
+	SecretFormat       string
+	KeystoneInitStatus string
+)
+
 var (
-	Memory BackingStore = "memory"
-	File   BackingStore = "file"
-	Json   SecretFormat = "json"
-	Yaml   SecretFormat = "yaml"
-	Raw    SecretFormat = "raw"
+	Memory  BackingStore       = "memory"
+	File    BackingStore       = "file"
+	Json    SecretFormat       = "json"
+	Yaml    SecretFormat       = "yaml"
+	Raw     SecretFormat       = "raw"
+	Pending KeystoneInitStatus = "pending"
+	Ready   KeystoneInitStatus = "ready"
 )
 
 // Secret___ types are what is shown to the user.

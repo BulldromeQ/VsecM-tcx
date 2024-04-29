@@ -11,7 +11,7 @@
 
 title: Changelog
 layout: post
-prev_url: /
+prev_url: /docs/use-case-showcase/
 permalink: /docs/changelog/
 next_url: /docs/releases/
 ---
@@ -19,6 +19,68 @@ next_url: /docs/releases/
 ## Recent Updates
 
 TBD
+
+## [0.25.1] - 2024-04-26
+
+This was a stability and reliability release. We have made several improvements
+to VSecM Sentinel, helm charts, and Kubernetes manifests to make the system
+more reliable and resilient.
+
+### Changed
+
+* Converted VSecM Safe and SPIRE Server to StatefulSets (because they are stateful).
+* VSecM Sentinel "init command" loop now exits the container if it cannot execute
+  commands after exponential backoff. The former behavior was to retry forever,
+  and that was not a cloud-native way of handling the situation. Panicking 
+  early and thus killing the pod fixed issues with things like persistent volumes
+  and CSI drivers.
+
+### Fixed
+
+* Minor bug fixes in the VSecM Sentinel init command workflow.
+
+## [0.25.0] - 2024-04-24
+
+### Added
+
+* Documentation updates.
+* Added liveness and readiness probes to SPIRE Server and SPIRE Agent. 
+* Added pod priority classes to SPIRE Server, SPIRE Agent, and VSecM pods
+  to ensure that VSecM components are prioritized and maintained in the
+  event of resource constraints.
+* VSecM Sentinel Init Commands can now wait a configurable amount of time
+  before running. This feature is useful when you want to delay the execution
+  of the init commands to ensure that other components are ready.
+* VSecM Sentinel can now wait before marking Init Commands as successful.
+  This feature is useful when you want to delay the readiness of VSecM Sentinel
+  until other components are ready.
+* VSecM Sentinel Init Command can now parse and understand all VSecM Sentinel
+  commands.
+* Added Generated protobuffer files into the source code for ease of maintenance.
+
+### Changed
+
+* Removed the tombstone feature, we use VSecM Keystone instead of tombstone,
+  which is more reliable, secure, and under our control.
+* Reliability improvements in VSecM Sentinel. For example, VSecM Sentinel does
+  not wait forever in a loop for VSecM Safe to be ready. Instead, it crashes
+  after a grace period, and the orchestrator can restart it in a more cloud-native way.
+* SPIRE Server is now a `StatefulSet` by default instead of a `Deployment`.
+  This change ensures that SPIRE Server has a stable identity across restarts.
+* VSecM Keystone, and VSecM Keystone secrets are being used instead of tombstone.
+* Various other stabilization improvements.
+
+### Fixed
+
+* Minor bug fixes and feature enhancements.
+
+### Security
+
+* Fixed CVE-2023-45288 [net/http, x/net/http2: close connections when receiving too many headers](https://github.com/vmware-tanzu/secrets-manager/security/dependabot/12)
+* Fixed GHSA-pxvg-2qj5-37jq [Nokogiri updates packaged libxml2 to v2.10.4 to resolve multiple CVEs](https://github.com/vmware-tanzu/secrets-manager/security/dependabot/13)
+* Fixed GHSA-xc9x-jj77-9p9j [Nokogiri update packaged libxml2 to v2.12.5 to resolve CVE-2024-25062](https://github.com/vmware-tanzu/secrets-manager/security/dependabot/14)
+* Fixed GHSA-vcc3-rw6f-jv97 [Use-after-free in libxml2 via Nokogiri::XML::Reader](https://github.com/vmware-tanzu/secrets-manager/security/dependabot/15)
+* Addressed CVE-2020-8559 [Privilege Escalation in Kubernetes](https://github.com/vmware-tanzu/secrets-manager/security/dependabot/16)
 
 ## [v0.24.1] - 2024-03-31
 
